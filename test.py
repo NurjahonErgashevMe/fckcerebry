@@ -3,34 +3,19 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import UnexpectedAlertPresentException
 import requests
-import json
-import re
 import tempfile
 import time
-import os
-
-
-def format_json_string(input_str):
-    """Форматирует строку в правильный JSON формат."""
-    input_str = re.sub(r"([{,]\s*)(\w+)(:)", r'\1"\2"\3', input_str)
-    input_str = re.sub(r"'", '"', input_str)
-    input_str = re.sub(r':\s*([^"][^,}\s]+)', r':"\1"', input_str)
-    return input_str
 
 
 def get_student_credentials():
     """Получает список логинов и паролей из входных данных."""
     print("\nПример правильного формата:")
-    print('[{"login":"uzb_404500","password":"300Maktab9z"}]')
-    print("\nВы также можете ввести без кавычек:")
-    print("[{login:uzb_404500,password:300Maktab9z}]")
+    print('[{"login":"...","password":"..."}]')
 
-    student_input = input("\nВведите массив с логинами и паролями: ").strip()
+    student_input = input("\nВведите массив с логинами и паролями: ")
 
     try:
-        formatted_input = format_json_string(student_input)
-        credentials = json.loads(formatted_input)
-
+        credentials = eval(student_input)
         if isinstance(credentials, list) and all(
             "login" in cred and "password" in cred for cred in credentials
         ):
@@ -41,13 +26,13 @@ def get_student_credentials():
                 "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
             )
             return []
-    except json.JSONDecodeError:
-        print("\nОшибка обработки ввода. Пожалуйста, проверьте формат.")
-        print("Попробуйте ввести данные как в примере выше.")
-        return []
     except Exception as e:
-        print(f"\nНеожиданная ошибка: {str(e)}")
+        print(f"\nОшибка обработки ввода: {str(e)}")
         return []
+    # return [
+    #     {"login": "uzb_545107", "password": "300Maktab9z"},
+    #     {"login": "uzb_542310", "password": "300Maktab9z"},
+    # ]
 
 
 def setup_browser(profile_dir):
@@ -168,7 +153,7 @@ def save_script_to_localstorage_from_file(driver, script_path):
             script_content = file.read()
 
         # Сохраняем в localStorage через Selenium
-        storage.set("chooseScript", script_content)
+        storage.set("chooseScienceScript", script_content)
         print(f"Скрипт из файла '{script_path}' успешно сохранён в localStorage.")
     except Exception as e:
         print(f"Ошибка при сохранении скрипта: {e}")
@@ -186,15 +171,15 @@ def add_observer_script(driver):
                 console.log('MutationObserver сработал');
                 const header = document.querySelector('div[class^="dd-header-title"]');
                 if (header) {
-                    console.log('DGHR-SCIENCE-QEFW detected, injecting script from localStorage');
+                    console.log('DGHR-SCIENCE detected, injecting script from localStorage');
                     observer.disconnect();
-                     const statusElement = document.getElementById('status-element');
-                        if (statusElement) {
-                            statusElement.remove();
-                        }
+                    const statusElement = document.getElementById('status-element');
+                    if (statusElement) {
+                        statusElement.remove();
+                    }
 
                     // Извлекаем скрипт из localStorage и выполняем его
-                    const scriptContent = localStorage.getItem('chooseScript');
+                    const scriptContent = localStorage.getItem('chooseScienceScript');
                     if (scriptContent) {
                         const script = document.createElement('script');
                         script.textContent = scriptContent;
@@ -202,7 +187,8 @@ def add_observer_script(driver):
                     } else {
                         console.error('Скрипт не найден в localStorage');
                     }
-                }
+                } 
+                
             }
         }
     };
@@ -255,8 +241,11 @@ def run(users):
 
     # Авторизация для каждого пользователя
     for driver, user in drivers:
+        ls = LocalStorage(driver)
+
+        ls.clear()
         update_status(driver, "логинимся")
-        add_observer_script(driver)
+        # add_observer_script(driver)
         enable_request_blocking(driver)
 
         # Проверка наличия токенов
@@ -285,11 +274,12 @@ def run(users):
             disable_request_blocking(driver)
             driver.refresh()
 
-            time.sleep(10)  # Даем время для выполнения скрипта
-            save_script_to_localstorage_from_file(
-                driver, os.path.join(os.path.dirname(__file__), "choose-script.js")
-            )
-            add_observer_script(driver)
+            # time.sleep(10)  # Даем время для выполнения скрипта
+            # save_script_to_localstorage_from_file(
+            #     driver,
+            #     os.path.join(os.path.dirname(__file__), "choose-science_script.js"),
+            # )
+            # add_observer_script(driver)
             update_status(driver, "загружаем тесты")
         else:
             session = requests.Session()
@@ -350,17 +340,20 @@ def run(users):
                 disable_request_blocking(driver)
                 driver.refresh()
 
-                time.sleep(10)  # Даем время для выполнения скрипта
-                save_script_to_localstorage_from_file(
-                    driver, os.path.join(os.path.dirname(__file__), "choose-script.js")
-                )
+                # time.sleep(10)  # Даем время для выполнения скрипта
+                # save_script_to_localstorage_from_file(
+                #     driver,
+                #     os.path.join(os.path.dirname(__file__), "choose-science_script.js"),
+                # )
 
-                add_observer_script(driver)
+                # add_observer_script(driver)
                 update_status(driver, "загружаем тесты")
             else:
                 print(
                     f"Ошибка авторизации для пользователя {user['login']}: {response.status_code}, {response.text}"
                 )
+        time.sleep(5)  # Добавляем задержку перед запуском следующего пользователя
+
     # Теперь браузеры загружают страницы как авторизованные пользователи
     print("Загрузка завершена.")
 

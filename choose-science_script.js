@@ -650,16 +650,41 @@
     }
   };
 
-  const processQuestionByType = (questionData) => {
+  const areAllAnswersInserted = (questionData) => {
+    if (!questionData || !questionData.answers) return false;
+
+    let allInserted = true;
+
+    questionData.answers.forEach((answer) => {
+      if (answer.type === "select") {
+        const allSelects = document.querySelectorAll("select.cerebry_answer_input");
+        answer.values.forEach((selectIndex, i) => {
+          const selectElement = allSelects[i];
+          if (!selectElement || selectElement.selectedIndex !== selectIndex) {
+            allInserted = false;
+          }
+        });
+      } else if (answer.type === "drag") {
+        // Проверка для drag элементов
+        const dndContainers = document.querySelectorAll(".d-n-d-container");
+        if (!dndContainers.length) {
+          allInserted = false;
+        }
+        // Дополнительные проверки для drag элементов можно добавить здесь
+      }
+    });
+
+    return allInserted;
+  };
+
+  const processQuestionByType = async (questionData) => {
     if (!questionData || !questionData.answers) return;
 
     let dragIndex = 0; // Индекс для drag элементов
 
-    questionData.answers.forEach((answer, index) => {
+    await questionData.answers.forEach((answer, index) => {
       if (answer.type === "select") {
-        const allSelects = document.querySelectorAll(
-          "select.cerebry_answer_input"
-        );
+        const allSelects = document.querySelectorAll("select.cerebry_answer_input");
         answer.values.forEach((selectIndex, i) => {
           const selectElement = allSelects[i];
           console.log(selectElement, "selectElement");
@@ -675,9 +700,11 @@
 
     setTimeout(() => {
       isAnswersInserted = true;
-      const checkButton = document.querySelector('div[class^="check-button"]');
-      if (checkButton) {
-        checkButton.click();
+      if (areAllAnswersInserted(questionData)) {
+        const checkButton = document.querySelector('div[class^="check-button"]');
+        if (checkButton) {
+          checkButton.click();
+        }
       }
     }, 3000);
   };

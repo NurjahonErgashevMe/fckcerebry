@@ -5,34 +5,37 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 import requests
 import tempfile
 import time
+import os
 
 
 def get_student_credentials():
     """Получает список логинов и паролей из входных данных."""
-    print("\nПример правильного формата:")
-    print('[{"login":"...","password":"..."}]')
+    # print("\nПример правильного формата:")
+    # print('[{"login":"...","password":"..."}]')
 
-    student_input = input("\nВведите массив с логинами и паролями: ")
+    # student_input = input("\nВведите массив с логинами и паролями: ")
 
-    try:
-        credentials = eval(student_input)
-        if isinstance(credentials, list) and all(
-            "login" in cred and "password" in cred for cred in credentials
-        ):
-            print(f"\nУспешно обработано {len(credentials)} учетных записей!")
-            return credentials
-        else:
-            print(
-                "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
-            )
-            return []
-    except Exception as e:
-        print(f"\nОшибка обработки ввода: {str(e)}")
-        return []
+    # try:
+    #     credentials = eval(student_input)
+    #     if isinstance(credentials, list) and all(
+    #         "login" in cred and "password" in cred for cred in credentials
+    #     ):
+    #         print(f"\nУспешно обработано {len(credentials)} учетных записей!")
+    #         return credentials
+    #     else:
+    #         print(
+    #             "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
+    #         )
+    #         return []
+    # except Exception as e:
+    #     print(f"\nОшибка обработки ввода: {str(e)}")
+    #     return []
     # return [
     #     {"login": "uzb_545107", "password": "300Maktab9z"},
     #     {"login": "uzb_542310", "password": "300Maktab9z"},
     # ]
+
+    return [{"login": "uzb_9150265", "password": "300Maktab9z"}]
 
 
 def setup_browser(profile_dir):
@@ -42,6 +45,7 @@ def setup_browser(profile_dir):
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--auto-open-devtools-for-tabs")
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
     chrome_options.add_argument(f"--user-data-dir={profile_dir}")
 
@@ -139,12 +143,13 @@ class LocalStorage:
         return self.items().__str__()
 
 
-def save_script_to_localstorage_from_file(driver, script_path):
+def save_script_to_localstorage_from_file(driver, script_path, storage_key):
     """
     Сохраняет JavaScript-код из файла в localStorage с помощью Selenium.
 
     :param driver: WebDriver Selenium
     :param script_path: Путь к файлу с JavaScript-кодом
+    :param storage_key: Ключ для сохранения скрипта в localStorage
     """
     storage = LocalStorage(driver)
     try:
@@ -153,45 +158,46 @@ def save_script_to_localstorage_from_file(driver, script_path):
             script_content = file.read()
 
         # Сохраняем в localStorage через Selenium
-        storage.set("chooseScienceScript", script_content)
+        storage.set(storage_key, script_content)
         print(f"Скрипт из файла '{script_path}' успешно сохранён в localStorage.")
     except Exception as e:
         print(f"Ошибка при сохранении скрипта: {e}")
 
 
-def add_observer_script(driver):
+def add_observer_script(driver, storage_key):
     """Добавляет скрипт для выполнения сохранённого в localStorage кода."""
-    observer_script = """
+    observer_script = f"""
     const targetNode = document.body;
-    const config = { childList: true, subtree: true };
+    const config = {{ childList: true, subtree: true }};
 
-    const callback = function(mutationsList, observer) {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList') {
+    const callback = function(mutationsList, observer) {{
+        for (let mutation of mutationsList) {{
+            if (mutation.type === 'childList') {{
                 console.log('MutationObserver сработал');
                 const header = document.querySelector('div[class^="dd-header-title"]');
-                if (header) {
-                    console.log('DGHR-SCIENCE detected, injecting script from localStorage');
+                if (header) {{
+                    console.log('DGHR-MATH detected, injecting script from localStorage');
                     observer.disconnect();
                     const statusElement = document.getElementById('status-element');
-                    if (statusElement) {
+                    if (statusElement) {{
                         statusElement.remove();
-                    }
+                    }}
 
                     // Извлекаем скрипт из localStorage и выполняем его
-                    const scriptContent = localStorage.getItem('chooseScienceScript');
-                    if (scriptContent) {
+                    const scriptContent = localStorage.getItem('{storage_key}');
+                    if (scriptContent) {{
                         const script = document.createElement('script');
+                        console.log('вставляем скрипт')
                         script.textContent = scriptContent;
-                        document.head.appendChild(script);
-                    } else {
+                        document.body.appendChild(script);
+                    }} else {{
                         console.error('Скрипт не найден в localStorage');
-                    }
-                } 
+                    }}
+                }} 
                 
-            }
-        }
-    };
+            }}
+        }}
+    }};
 
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
@@ -273,13 +279,12 @@ def run(users):
             )
             disable_request_blocking(driver)
             driver.refresh()
-
-            # time.sleep(10)  # Даем время для выполнения скрипта
-            # save_script_to_localstorage_from_file(
-            #     driver,
-            #     os.path.join(os.path.dirname(__file__), "choose-science_script.js"),
-            # )
-            # add_observer_script(driver)
+            save_script_to_localstorage_from_file(
+                driver,
+                os.path.join(os.path.dirname(__file__), "choose-math_script.js"),
+                "chooseMathScript",
+            )
+            add_observer_script(driver, "chooseMathScript")
             update_status(driver, "загружаем тесты")
         else:
             session = requests.Session()
@@ -339,14 +344,12 @@ def run(users):
                 update_status(driver, "меняем язык")
                 disable_request_blocking(driver)
                 driver.refresh()
-
-                # time.sleep(10)  # Даем время для выполнения скрипта
-                # save_script_to_localstorage_from_file(
-                #     driver,
-                #     os.path.join(os.path.dirname(__file__), "choose-science_script.js"),
-                # )
-
-                # add_observer_script(driver)
+                save_script_to_localstorage_from_file(
+                    driver,
+                    "C:/Users/Nurjahon/Desktop/fckselebry/choose-math_script.js",
+                    "chooseMathScript",
+                )
+                add_observer_script(driver, "chooseMathScript")
                 update_status(driver, "загружаем тесты")
             else:
                 print(

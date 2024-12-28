@@ -10,32 +10,26 @@ import os
 
 def get_student_credentials():
     """Получает список логинов и паролей из входных данных."""
-    # print("\nПример правильного формата:")
-    # print('[{"login":"...","password":"..."}]')
+    print("\nПример правильного формата:")
+    print('[{"login":"...","password":"..."}]')
 
-    # student_input = input("\nВведите массив с логинами и паролями: ")
+    student_input = input("\nВведите массив с логинами и паролями: ")
 
-    # try:
-    #     credentials = eval(student_input)
-    #     if isinstance(credentials, list) and all(
-    #         "login" in cred and "password" in cred for cred in credentials
-    #     ):
-    #         print(f"\nУспешно обработано {len(credentials)} учетных записей!")
-    #         return credentials
-    #     else:
-    #         print(
-    #             "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
-    #         )
-    #         return []
-    # except Exception as e:
-    #     print(f"\nОшибка обработки ввода: {str(e)}")
-    #     return []
-    # return [
-    #     {"login": "uzb_545107", "password": "300Maktab9z"},
-    #     {"login": "uzb_542310", "password": "300Maktab9z"},
-    # ]
-
-    return [{"login": "uzb_9150265", "password": "300Maktab9z"}]
+    try:
+        credentials = eval(student_input)
+        if isinstance(credentials, list) and all(
+            "login" in cred and "password" in cred for cred in credentials
+        ):
+            print(f"\nУспешно обработано {len(credentials)} учетных записей!")
+            return credentials
+        else:
+            print(
+                "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
+            )
+            return []
+    except Exception as e:
+        print(f"\nОшибка обработки ввода: {str(e)}")
+        return []
 
 
 def setup_browser(profile_dir):
@@ -45,7 +39,7 @@ def setup_browser(profile_dir):
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--auto-open-devtools-for-tabs")
+    # chrome_options.add_argument("--auto-open-devtools-for-tabs")
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
     chrome_options.add_argument(f"--user-data-dir={profile_dir}")
 
@@ -344,9 +338,12 @@ def run(users):
                 update_status(driver, "меняем язык")
                 disable_request_blocking(driver)
                 driver.refresh()
+                script_path = os.path.join(
+                    os.path.dirname(__file__), "choose-math_script.js"
+                )
                 save_script_to_localstorage_from_file(
                     driver,
-                    "C:/Users/Nurjahon/Desktop/fckselebry/choose-math_script.js",
+                    script_path,
                     "chooseMathScript",
                 )
                 add_observer_script(driver, "chooseMathScript")

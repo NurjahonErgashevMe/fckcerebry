@@ -10,7 +10,7 @@
       answers: [
         {
           type: "chooser",
-          values: [[0, 1]],
+          values: [[1, 4]],
         },
       ],
     },
@@ -1283,15 +1283,22 @@
   };
 
   const observeTopicDivs = (onHas, type) => {
-    const observer = new MutationObserver((mutations) => {
+    const observer = new MutationObserver((mutations, observerInstance) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes.length) {
           const topicDivs = document.querySelectorAll(
             `body.${type} div[class^=topic-main]:not(.topic-disabled__1-jCQ)`
           );
+
           if (topicDivs.length > 0) {
-            console.log(topicDivs, "topicDivs");
-            onHas(topicDivs, observer);
+            const lastIndex = topicDivs.length - 1;
+
+            proxyState.currentTopicIndex = lastIndex;
+
+            onHas(topicDivs, lastIndex, observerInstance);
+            if (lastIndex >= 15) {
+              observerInstance.disconnect();
+            }
           }
         }
       });
@@ -1312,22 +1319,27 @@
     set: function (obj, prop, value) {
       if (prop === "currentTopicIndex" && value !== obj[prop]) {
         console.log(`property set: ${prop} = ${value}`);
-        observeTopicDivs((topicDivs) => {
-          if (value < 15) {
-            topicDivs.forEach((topicDiv) => {
-              topicDiv.style.backgroundColor = "transparent";
-            });
 
-            topicDivs[value].style.backgroundColor = "green";
-            setTimeout(() => {
-              console.log(topicDivs[value], "current topicDiv");
-              topicDivs[value].click();
-            }, 1500);
-          } else {
-            alert("Все темы пройдены!");
-            observer.disconnect();
-          }
-        }, "fix_math");
+        if (value >= 15) {
+          alert("все тесты математики успешно пройдены!");
+        } else {
+          const topicDivs = document?.querySelectorAll(
+            `body.fix_math div[class^=topic-main]:not(.topic-disabled__1-jCQ)`
+          );
+
+          const currentTopic = topicDivs[value];
+          console.log(currentTopic, "currentTopic");
+
+          topicDivs.forEach((topicDiv) => {
+            topicDiv.style.backgroundColor = "transparent";
+            topicDiv.classList.remove("active-topic");
+          });
+
+          currentTopic.style.backgroundColor = "green";
+          currentTopic.classList.add("active-topic");
+
+          currentTopic.click();
+        }
       }
       obj[prop] = value;
       return true;
@@ -1350,6 +1362,138 @@
     }
     return null;
   };
+
+  // Хранилище для отслеживания состояния кликов по селекторам
+  const clickedElements = new Set();
+
+  const observeAndClick = (
+    selector,
+    delay = 1000,
+    handler = (element) => {},
+    timeout = 10000
+  ) => {
+    // Если по этому селектору уже был клик - выходим
+    if (clickedElements.has(selector)) {
+      console.log(`Click already processed for: ${selector}`);
+      return;
+    }
+
+    let timeoutId;
+
+    const observer = new MutationObserver((mutations, observerInstance) => {
+      const element = document.querySelector(selector);
+      if (element && !clickedElements.has(selector)) {
+        observerInstance.disconnect();
+        clearTimeout(timeoutId);
+
+        // Помечаем селектор как обработанный
+        clickedElements.add(selector);
+
+        setTimeout(() => {
+          element.click();
+          handler?.(element);
+          console.log(`Clicked element: ${selector}`);
+        }, delay);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    timeoutId = setTimeout(() => {
+      observer.disconnect();
+      console.log(`Element ${selector} not found within ${timeout}ms`);
+    }, timeout);
+
+    const element = document.querySelector(selector);
+    if (element && !clickedElements.has(selector)) {
+      observer.disconnect();
+      clearTimeout(timeoutId);
+
+      // Помечаем селектор как обработанный
+      clickedElements.add(selector);
+
+      setTimeout(() => {
+        element.click();
+        handler?.(element);
+        console.log(`Clicked element: ${selector}`);
+      }, delay);
+    }
+  };
+
+  // Функция для очистки истории кликов (используйте при необходимости сбросить состояние)
+  const resetClickHistory = () => {
+    clickedElements.clear();
+  };
+  // // Функция для ожидания появления элемента и добавления обработчика
+  // const waitForElementAndHandle = (selector, handler, timeout = 5000) => {
+  //   return new Promise((resolve, reject) => {
+  //     // Если элемент уже существует
+  //     if (document.querySelector(selector)) {
+  //       const element = addClickHandlerOnce(
+  //         document.querySelector(selector),
+  //         handler
+  //       );
+  //       resolve(element);
+  //       return;
+  //     }
+
+  //     const observer = new MutationObserver((mutations, observerInstance) => {
+  //       const element = document.querySelector(selector);
+  //       if (element) {
+  //         // Останавливаем наблюдение
+  //         observerInstance.disconnect();
+  //         const handledElement = addClickHandlerOnce(element, handler);
+  //         resolve(handledElement);
+  //       }
+  //     });
+
+  //     // Настройка observer
+  //     observer.observe(document.body, {
+  //       childList: true,
+  //       subtree: true,
+  //     });
+
+  //     // Таймаут для прекращения ожидания
+  //     setTimeout(() => {
+  //       observer.disconnect();
+  //       reject(`Element ${selector} not found within ${timeout}ms`);
+  //     }, timeout);
+  //   });
+  // };
+
+  // const addClickHandlerOnce = (element, handler, delay = 0) => {
+  //   if (!element) {
+  //     console.log("element not found", element);
+  //     return;
+  //   }
+
+  //   // Удаляем все существующие обработчики
+  //   const clonedElement = element.cloneNode(true);
+  //   element.parentNode.replaceChild(clonedElement, element);
+
+  //   // Добавляем один обработчик после задержки
+  //   setTimeout(() => {
+  //     clonedElement.addEventListener(
+  //       "click",
+  //       (event) => {
+  //         // Предотвращаем множественные быстрые клики
+  //         clonedElement.style.pointerEvents = "none";
+  //         handler(event);
+
+  //         // Возвращаем возможность клика через короткое время
+  //         setTimeout(() => {
+  //           clonedElement.style.pointerEvents = "auto";
+  //         }, 1000);
+  //       },
+  //       { once: true }
+  //     ); // Обработчик сработает только один раз
+  //   }, delay);
+
+  //   return clonedElement;
+  // };
 
   const interceptXHRRequests = () => {
     if (isXHRIntercepted) return;
@@ -1385,6 +1529,7 @@
                 const response = JSON.parse(xhr.responseText);
                 const questionId = response.question?.id;
                 proxyState.questionId = questionId;
+                resetClickHistory();
 
                 console.log("Перехвачен запрос next_question, ID:", questionId);
 
@@ -1394,23 +1539,20 @@
                 }
               } else if (xhr._url && xhr._url.includes("/submit_response/")) {
                 const response = JSON.parse(xhr.responseText);
+
                 if (response.title === "RIGHT") {
                   showNotification("Ответ правильный");
                   isAnswersInserted = false;
+
                   if (response.user_progress === 100) {
-                    setTimeout(() => {
-                      const chooseAnotherBtn = document.querySelector(
-                        'div[class^="choose-btn"]'
-                      );
-                      chooseAnotherBtn?.click();
-                    }, 1000);
+                    if (proxyState.currentTopicIndex === 14) {
+                      alert("Поздравляем! Вы прошли все тесты по MATH");
+                    } else {
+                      observeAndClick('div[class^="choose-btn"]', 1000);
+                      observeAndClick('div[class^="try-button"]', 1000);
+                    }
                   } else {
-                    setTimeout(() => {
-                      const nextButton = document.querySelector(
-                        'div[class^="try-button"]'
-                      );
-                      nextButton?.click();
-                    }, 1000);
+                    observeAndClick('div[class^="try-button"]', 1000);
                   }
                 }
               } else if (
@@ -1430,29 +1572,11 @@
                 const response = JSON.parse(xhr.responseText)?.[0];
                 const userProgress = response.user_progress;
                 if (userProgress === 100) {
-                  observeTopicDivs((topicDivs) => {
-                    const lastIndex = topicDivs.length - 1;
-
-                    if (lastIndex === 14) {
-                      alert("Все темы пройдены!");
-                    } else {
-                      setTimeout(() => {
-                        const goBackButton = document.querySelector(
-                          "div[class^=goback-button]"
-                        );
-                        goBackButton.click();
-                      }, 3000);
-                    }
+                  observeAndClick("div[class^=goback-button]", 1000, () => {
+                    // proxyState.currentTopicIndex += 1;
                   });
-                } else if (userProgress < 100) {
-                  setTimeout(() => {
-                    const practiceButton = document.querySelector(
-                      "div[class^=practice-btn]"
-                    );
-                    if (practiceButton) {
-                      practiceButton.click();
-                    }
-                  }, 3000);
+                } else {
+                  observeAndClick("div[class^=practice-btn]", 1000);
                 }
               }
             } catch (e) {
@@ -1493,7 +1617,6 @@
   };
 
   const setSelectValue = (selectElement, index) => {
-    console.log(selectElement, "selectElement");
     if (selectElement && selectElement.options[index]) {
       selectElement.selectedIndex = index;
       const event = new Event("change", { bubbles: true });
@@ -1504,27 +1627,70 @@
   };
 
   const handleChooserClick = (values) => {
-    const solutionsForms = document.querySelectorAll(".YwzZU-JBlBsI70aaM6INT");
-    if (!solutionsForms.length) {
-      console.error("Контейнер для chooser не найден");
-      return;
-    }
+    let observer; // Объявляем наблюдатель вне функции, чтобы иметь к нему доступ
 
-    values.forEach((formValues, formIndex) => {
-      const divs =
-        solutionsForms[formIndex].querySelectorAll("div[data-index]");
-      formValues.forEach((value) => {
-        const div = divs[value];
-        // console.log("choose div", div);
-        if (div) {
-          div.click();
-        } else {
-          console.error(
-            `Элемент с data-index=${value} не найден в контейнере ${formIndex}`
-          );
+    const processForms = () => {
+      // Ищем все формы с классом YwzZU-JBlBsI70aaM6INT
+      const solutionsForms = document.querySelectorAll(
+        ".YwzZU-JBlBsI70aaM6INT"
+      );
+
+      if (solutionsForms.length > 0) {
+        console.log("Элементы найдены. Начинаем обработку...");
+
+        values.forEach((formValues, formIndex) => {
+          const form = solutionsForms[formIndex];
+          if (!form) {
+            console.warn(`Форма с индексом ${formIndex} отсутствует.`);
+            return;
+          }
+
+          // Найти все элементы с data-index внутри формы
+          const divs = form.querySelectorAll("div[data-index]");
+          if (!divs || divs.length === 0) {
+            console.warn(
+              `Элементы с data-index в форме ${formIndex} ещё не добавлены.`
+            );
+            return;
+          }
+
+          // Сброс активных элементов
+          // divs.forEach((div) => div.classList.remove("active"));
+
+          // Установить активные элементы
+          formValues.forEach((value) => {
+            const div = divs[value];
+            if (div && !div.classList.contains("active")) {
+              div.click();
+              div.classList.add("active");
+            } else {
+              console.error(
+                `Элемент с data-index=${value} не найден в форме ${formIndex}.`
+              );
+            }
+          });
+        });
+
+        // Отключаем наблюдатель после обработки
+        if (observer) {
+          observer.disconnect();
+          console.log("MutationObserver отключён.");
         }
-      });
+      }
+    };
+
+    observer = new MutationObserver((mutations, observerInstance) => {
+      processForms(); // Вызываем обработку, если DOM изменился
     });
+
+    // Запускаем наблюдение за изменениями в body
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Пробуем сразу выполнить обработку, если элементы уже есть
+    processForms();
   };
 
   const handleTextInput = (values) => {
@@ -1580,23 +1746,71 @@
     let allInserted = true;
 
     questionData.answers.forEach((answer) => {
-      if (answer.type === "select") {
-        const allSelects = document.querySelectorAll(
-          "select.cerebry_answer_input"
-        );
-        answer.values.forEach((selectIndex, i) => {
-          const selectElement = allSelects[i];
-          if (!selectElement || selectElement.selectedIndex !== selectIndex) {
+      switch (answer.type) {
+        case "select":
+          const allSelects = document.querySelectorAll(
+            "select.cerebry_answer_input"
+          );
+          answer.values.forEach((selectIndex, i) => {
+            const selectElement = allSelects[i];
+            if (!selectElement || selectElement.selectedIndex !== selectIndex) {
+              allInserted = false;
+            }
+          });
+          break;
+
+        case "drag":
+          const dndContainers = document.querySelectorAll(".d-n-d-container");
+          if (!dndContainers.length) {
             allInserted = false;
           }
-        });
-      } else if (answer.type === "drag") {
-        // Проверка для drag элементов
-        const dndContainers = document.querySelectorAll(".d-n-d-container");
-        if (!dndContainers.length) {
-          allInserted = false;
-        }
-        // Дополнительные проверки для drag элементов можно добавить здесь
+          break;
+
+        case "text":
+          const textInputs = document.querySelectorAll('input[type="text"]');
+          answer.values.forEach((value, i) => {
+            const inputElement = textInputs[i];
+            if (
+              !inputElement ||
+              !inputElement.value ||
+              inputElement.value !== value.toString()
+            ) {
+              allInserted = false;
+            }
+          });
+          break;
+
+        case "chooser":
+          const solutionsForms = document.querySelectorAll(
+            ".YwzZU-JBlBsI70aaM6INT"
+          );
+          answer.values.forEach((formValues, formIndex) => {
+            const form = solutionsForms[formIndex];
+            if (!form) {
+              allInserted = false;
+              return;
+            }
+
+            const selectedDivs = form.querySelectorAll(
+              "div[data-index].active"
+            );
+            if (selectedDivs.length !== formValues.length) {
+              allInserted = false;
+              return;
+            }
+
+            // Проверяем, что все выбранные значения соответствуют ожидаемым
+            const selectedIndices = Array.from(selectedDivs).map((div) =>
+              parseInt(div.getAttribute("data-index"))
+            );
+
+            formValues.forEach((expectedValue) => {
+              if (!selectedIndices.includes(expectedValue)) {
+                allInserted = false;
+              }
+            });
+          });
+          break;
       }
     });
 
@@ -1634,12 +1848,8 @@
     if (areAllAnswersInserted(questionData)) {
       isAnswersInserted = true;
       const checkButton = document.querySelector('div[class^="check-button"]');
-      if (checkButton) {
-        checkButton.setAttribute("type", "button");
-        console.log("click checkbutton");
-        checkButton.click();
-        console.log("readding");
-      }
+      checkButton.setAttribute("type", "button");
+      observeAndClick('div[class^="check-button"]', 1000);
     }
   };
 
@@ -1694,24 +1904,16 @@
               if (!isObserverStarted) {
                 isObserverStarted = true; // Устанавливаем флаг
                 interceptXHRRequests();
-                observeTopicDivs((topicDivs) => {
-                  const lastIndex = topicDivs.length - 1;
-                  proxyState.currentTopicIndex = lastIndex;
+                observeTopicDivs((topicDivs, lastIndex) => {
+                  console.log("first topic divs observer");
 
-                  console.log(lastIndex, "lastIndex");
-                  if (lastIndex < 15) {
-                    topicDivs.forEach((topicDiv) => {
-                      topicDiv.style.backgroundColor = "transparent";
-                    });
+                  topicDivs.forEach((topicDiv) => {
+                    topicDiv.style.backgroundColor = "transparent";
+                  });
 
-                    topicDivs[lastIndex].style.backgroundColor = "green";
-                    setTimeout(() => {
-                      topicDivs[lastIndex].click();
-                    }, 1500);
-                  } else {
-                    alert("Все темы пройдены!");
-                    observer.disconnect();
-                  }
+                  topicDivs[lastIndex].style.backgroundColor = "green";
+
+                  observeAndClick(topicDivs[lastIndex].className, 1500, 50000);
                 }, "fix_math");
               }
             } else {

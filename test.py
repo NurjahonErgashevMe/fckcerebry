@@ -10,26 +10,34 @@ import os
 
 def get_student_credentials():
     """Получает список логинов и паролей из входных данных."""
-    print("\nПример правильного формата:")
-    print('[{"login":"...","password":"..."}]')
+    # print("\nПример правильного формата:")
+    # print('[{"login":"...","password":"..."}]')
 
-    student_input = input("\nВведите массив с логинами и паролями: ")
+    # student_input = input("\nВведите массив с логинами и паролями: ")
 
-    try:
-        credentials = eval(student_input)
-        if isinstance(credentials, list) and all(
-            "login" in cred and "password" in cred for cred in credentials
-        ):
-            print(f"\nУспешно обработано {len(credentials)} учетных записей!")
-            return credentials
-        else:
-            print(
-                "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
-            )
-            return []
-    except Exception as e:
-        print(f"\nОшибка обработки ввода: {str(e)}")
-        return []
+    # try:
+    #     credentials = eval(student_input)
+    #     if isinstance(credentials, list) and all(
+    #         "login" in cred and "password" in cred for cred in credentials
+    #     ):
+    #         print(f"\nУспешно обработано {len(credentials)} учетных записей!")
+    #         return credentials
+    #     else:
+    #         print(
+    #             "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
+    #         )
+    #         return []
+    # except Exception as e:
+    #     print(f"\nОшибка обработки ввода: {str(e)}")
+    #     return []
+
+    return [
+        {"login": "uzb_593440", "password": "300maktab"},
+        {"login": "uzb_593436", "password": "300maktab"},
+        {"login": "uzb_593433", "password": "300maktab"},
+        {"login": "uzb_593432", "password": "300maktab"},
+        {"login": "uzb_593431", "password": "300maktab"},
+    ]
 
 
 def setup_browser(profile_dir):

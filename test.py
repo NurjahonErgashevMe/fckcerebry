@@ -2,42 +2,77 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import UnexpectedAlertPresentException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 import requests
 import tempfile
 import time
 import os
 
 
+def handle_science_choice(driver):
+    try:
+        print("Ищем элемент SCIENCE...")
+        # Ожидаем появления элемента
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,
+                    "//div[starts-with(@class, 'dd-list-item') and contains(text(), 'SCIENCE')]",
+                )
+            )
+        )
+        ActionChains(driver).move_to_element(element).click().perform()
+    except TimeoutException:
+        print("Элемент SCIENCE не найден.")
+
+
+def choose_subject():
+    print("\nВведите, что хотите выбрать: math или science")
+    print("math = 1, science = 2")
+    choice = input("Ваш выбор: ").strip().lower()
+
+    if choice == "1" or choice == "math":
+        return "math"
+    elif choice == "2" or choice == "science":
+        return "science"
+    else:
+        print("Некорректный выбор, по умолчанию выбрано math.")
+        return "science"
+
+
 def get_student_credentials():
     """Получает список логинов и паролей из входных данных."""
-    # print("\nПример правильного формата:")
-    # print('[{"login":"...","password":"..."}]')
+    print("\nПример правильного формата:")
+    print('[{"login":"...","password":"..."}]')
 
-    # student_input = input("\nВведите массив с логинами и паролями: ")
+    student_input = input("\nВведите массив с логинами и паролями: ")
 
-    # try:
-    #     credentials = eval(student_input)
-    #     if isinstance(credentials, list) and all(
-    #         "login" in cred and "password" in cred for cred in credentials
-    #     ):
-    #         print(f"\nУспешно обработано {len(credentials)} учетных записей!")
-    #         return credentials
-    #     else:
-    #         print(
-    #             "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
-    #         )
-    #         return []
-    # except Exception as e:
-    #     print(f"\nОшибка обработки ввода: {str(e)}")
-    #     return []
-
-    return [
-        {"login": "uzb_593440", "password": "300maktab"},
-        {"login": "uzb_593436", "password": "300maktab"},
-        {"login": "uzb_593433", "password": "300maktab"},
-        {"login": "uzb_593432", "password": "300maktab"},
-        {"login": "uzb_593431", "password": "300maktab"},
-    ]
+    try:
+        credentials = eval(student_input)
+        if isinstance(credentials, list) and all(
+            "login" in cred and "password" in cred for cred in credentials
+        ):
+            print(f"\nУспешно обработано {len(credentials)} учетных записей!")
+            return credentials
+        else:
+            print(
+                "\nНекорректный формат ввода. Убедитесь, что передаете массив объектов с ключами 'login' и 'password'."
+            )
+            return []
+    except Exception as e:
+        print(f"\nОшибка обработки ввода: {str(e)}")
+        return []
+    # return [
+    #     {"login": "uzb_414531", "password": "300maktab"},
+    #     # {"login": "uzb_593436", "password": "300maktab"},
+    #     # {"login": "uzb_593433", "password": "300maktab"},
+    #     # {"login": "uzb_593432", "password": "300maktab"},
+    #     # {"login": "uzb_593431", "password": "300maktab"},
+    # ]
 
 
 def setup_browser(profile_dir):
@@ -166,7 +201,7 @@ def save_script_to_localstorage_from_file(driver, script_path, storage_key):
         print(f"Ошибка при сохранении скрипта: {e}")
 
 
-def add_observer_script(driver, storage_key):
+def add_observer_script(driver, storage_key, subject_choice=""):
     """Добавляет скрипт для выполнения сохранённого в localStorage кода."""
     observer_script = f"""
     const targetNode = document.body;
@@ -178,7 +213,7 @@ def add_observer_script(driver, storage_key):
                 console.log('MutationObserver сработал');
                 const header = document.querySelector('div[class^="dd-header-title"]');
                 if (header) {{
-                    console.log('DGHR-MATH detected, injecting script from localStorage');
+                    console.log('DGHR-SCIENCE detected, injecting script from localStorage');
                     observer.disconnect();
                     const statusElement = document.getElementById('status-element');
                     if (statusElement) {{
@@ -192,6 +227,22 @@ def add_observer_script(driver, storage_key):
                         console.log('вставляем скрипт')
                         script.textContent = scriptContent;
                         document.body.appendChild(script);
+
+                        // Проверяем subject_choice и если science - выполняем клик
+                        if ('{subject_choice}' === 'science') {{
+                            const scienceElements = document.querySelectorAll("li[class^='dd-list-item']");
+                            let scienceFound = false;
+                            scienceElements.forEach(element => {{
+                                if (element.textContent.includes('SCIENCE')) {{
+                                    setTimeout(() => element.click(), 1500);
+                                    scienceFound = true;
+                                    console.log('Элемент SCIENCE найден и клик выполнен.');
+                                }}
+                            }});
+                            if (!scienceFound) {{
+                                console.log('Элемент SCIENCE не найден для клика.');
+                            }}
+                        }}
                     }} else {{
                         console.error('Скрипт не найден в localStorage');
                     }}
@@ -238,6 +289,8 @@ def run(users):
         "https://staging.sparkbackend.cerebry.co/api/v2/users/override_user_language/"
     )
 
+    subject_choice = choose_subject()
+
     # Открываем браузеры для каждого пользователя
     drivers = []
     for i, user in enumerate(users):
@@ -281,12 +334,26 @@ def run(users):
             )
             disable_request_blocking(driver)
             driver.refresh()
-            save_script_to_localstorage_from_file(
-                driver,
-                os.path.join(os.path.dirname(__file__), "choose-math_script.js"),
-                "chooseMathScript",
-            )
-            add_observer_script(driver, "chooseMathScript")
+            print(f"Вы выбрали : {subject_choice}")
+            if subject_choice == "science":
+                # Сохраняем science в localStorage
+                save_script_to_localstorage_from_file(
+                    driver,
+                    os.path.join(os.path.dirname(__file__), "choose-science_script.js"),
+                    "chooseScienceScript",
+                )
+
+                # Выполняем обработку для science
+                add_observer_script(driver, "chooseScienceScript", subject_choice)
+            else:
+                # Сохраняем math в localStorage (по умолчанию)
+                save_script_to_localstorage_from_file(
+                    driver,
+                    os.path.join(os.path.dirname(__file__), "choose-math_script.js"),
+                    "chooseMathScript",
+                )
+                add_observer_script(driver, "chooseMathScript", subject_choice)
+
             update_status(driver, "загружаем тесты")
         else:
             session = requests.Session()
@@ -346,15 +413,27 @@ def run(users):
                 update_status(driver, "меняем язык")
                 disable_request_blocking(driver)
                 driver.refresh()
-                script_path = os.path.join(
-                    os.path.dirname(__file__), "choose-math_script.js"
-                )
-                save_script_to_localstorage_from_file(
-                    driver,
-                    script_path,
-                    "chooseMathScript",
-                )
-                add_observer_script(driver, "chooseMathScript")
+                if subject_choice == "science":
+                    # Сохраняем science в localStorage
+                    save_script_to_localstorage_from_file(
+                        driver,
+                        os.path.join(
+                            os.path.dirname(__file__), "choose-science_script.js"
+                        ),
+                        "chooseScienceScript",
+                    )
+                    # Выполняем обработку для science
+                    add_observer_script(driver, "chooseScienceScript", subject_choice)
+                else:
+                    # Сохраняем math в localStorage (по умолчанию)
+                    save_script_to_localstorage_from_file(
+                        driver,
+                        os.path.join(
+                            os.path.dirname(__file__), "choose-math_script.js"
+                        ),
+                        "chooseMathScript",
+                    )
+                    add_observer_script(driver, "chooseMathScript", subject_choice)
                 update_status(driver, "загружаем тесты")
             else:
                 print(

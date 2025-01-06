@@ -417,7 +417,6 @@
     },
   };
 
-  let currentTopicIndex = 0;
   let isObserverStarted = false; // Флаг для отслеживания запуска наблюдателя
 
   const observeTopicDivs = (onHas, type) => {
@@ -439,6 +438,49 @@
       subtree: true,
     });
   };
+
+  let state = {
+    currentTopicIndex: 0,
+    questionId: null,
+  };
+
+  let handler = {
+    set: function (obj, prop, value) {
+      if (prop === "currentTopicIndex" && value !== obj[prop]) {
+        console.log(`property set: ${prop} = ${value}`);
+        resetClickHistory();
+        observeTopicDivs((topicDivs, observer) => {
+          if (value >= 5) {
+            alert("все тесты science успешно пройдены!");
+            observer.disconnect();
+          } else {
+            const currentTopic = topicDivs[value];
+            console.log(currentTopic, "currentTopic");
+
+            topicDivs.forEach((topicDiv) => {
+              topicDiv.style.backgroundColor = "transparent";
+              topicDiv.classList.remove("active-topic");
+            });
+
+            currentTopic.style.backgroundColor = "green";
+            currentTopic.classList.add("active-topic");
+
+            setTimeout(() => {
+              currentTopic.click();
+            }, 1000);
+          }
+        }, "fix_science");
+      }
+      obj[prop] = value;
+      return true;
+    },
+  };
+
+  const resetClickHistory = () => {
+    clickedElements.clear();
+  };
+
+  let proxyState = new Proxy(state, handler);
 
   let isXHRIntercepted = false;
   let isAnswersInserted = false;
@@ -486,6 +528,8 @@
               if (xhr._url && xhr._url.includes("/next_question/")) {
                 const response = JSON.parse(xhr.responseText);
                 const questionId = response.question?.id;
+                proxyState.questionId = questionId;
+                resetClickHistory();
 
                 console.log("Перехвачен запрос next_question, ID:", questionId);
 
@@ -499,20 +543,17 @@
                 if (response.title === "RIGHT") {
                   showNotification("Ответ правильный");
                   isAnswersInserted = false;
-                  setTimeout(() => {
-                    const nextButton = document.querySelector(
-                      'div[class^="try-button"]'
-                    );
-                    nextButton.click();
-                  }, 3000);
+                  // if (
+                  //   response.user_progress === 100 &&
+                  //   response.topic_level_name.toLowerCase() === "qiyin"
+                  // ) {
+                  //   observeAndClick('div[class^="goback-button"]', 1500, () => {
+                  //     proxyState.currentTopicIndex++;
+                  //   });
+                  // } else {
+                  // }
+                  observeAndClick('div[class^="try-button"]', 1500);
                 }
-              } else if (
-                xhr._url &&
-                xhr._url.includes(
-                  `/api/v2/users/student-class/DGHR-SCIENCE-${dynamicSuffix}/chapters/`
-                )
-              ) {
-                // console.log(response, "science");
               } else if (
                 xhr._url &&
                 xhr._url.includes(
@@ -522,32 +563,17 @@
               ) {
                 const response = JSON.parse(xhr.responseText)?.[0];
                 const userProgress = response.user_progress;
-                if (userProgress === 100) {
-                  setTimeout(() => {
-                    const goBackButton = document.querySelector(
-                      "div[class^=goback-button]"
-                    );
-                    goBackButton.click();
-                    currentTopicIndex += 1;
-                    const nextTopicDivs = document.querySelectorAll(
-                      "div[class^=topic-main]"
-                    );
-                    if (
-                      nextTopicDivs.length > 0 &&
-                      currentTopicIndex < nextTopicDivs.length
-                    ) {
-                      nextTopicDivs[currentTopicIndex].click();
-                    }
-                  }, 3000);
-                } else if (userProgress < 100) {
-                  setTimeout(() => {
-                    const practiceButton = document.querySelector(
-                      "div[class^=practice-btn]"
-                    );
-                    if (practiceButton) {
-                      practiceButton.click();
-                    }
-                  }, 3000);
+                if (
+                  userProgress === 100 &&
+                  response.topic_level_name.toLowerCase() == "qiyin"
+                ) {
+                  observeAndClick('div[class^="goback-button"]', 1500, () => {
+                    setTimeout(() => {
+                      proxyState.currentTopicIndex++;
+                    }, 1000);
+                  });
+                } else {
+                  observeAndClick('div[class^="practice-btn"]', 1500);
                 }
               }
             } catch (e) {
@@ -657,7 +683,9 @@
 
     questionData.answers.forEach((answer) => {
       if (answer.type === "select") {
-        const allSelects = document.querySelectorAll("select.cerebry_answer_input");
+        const allSelects = document.querySelectorAll(
+          "select.cerebry_answer_input"
+        );
         answer.values.forEach((selectIndex, i) => {
           const selectElement = allSelects[i];
           if (!selectElement || selectElement.selectedIndex !== selectIndex) {
@@ -680,33 +708,31 @@
   const processQuestionByType = async (questionData) => {
     if (!questionData || !questionData.answers) return;
 
-    let dragIndex = 0; // Индекс для drag элементов
+    let dragIndex = 0;
 
     await questionData.answers.forEach((answer, index) => {
       if (answer.type === "select") {
-        const allSelects = document.querySelectorAll("select.cerebry_answer_input");
+        const allSelects = document.querySelectorAll(
+          "select.cerebry_answer_input"
+        );
         answer.values.forEach((selectIndex, i) => {
           const selectElement = allSelects[i];
-          console.log(selectElement, "selectElement");
           if (selectElement) {
             setSelectValue(selectElement, selectIndex);
           }
         });
       } else if (answer.type === "drag") {
         handleDragDrop(answer.values, dragIndex);
-        dragIndex++; // Увеличиваем индекс для drag элементов
+        dragIndex++;
       }
     });
 
-    setTimeout(() => {
+    if (areAllAnswersInserted(questionData)) {
       isAnswersInserted = true;
-      if (areAllAnswersInserted(questionData)) {
-        const checkButton = document.querySelector('div[class^="check-button"]');
-        if (checkButton) {
-          checkButton.click();
-        }
-      }
-    }, 3000);
+      const checkButton = document.querySelector('div[class^="check-button"]');
+      checkButton.setAttribute("type", "button");
+      observeAndClick('div[class^="check-button"]', 1000);
+    }
   };
 
   const processQuestion = (questionId) => {
@@ -760,21 +786,22 @@
               document.body.classList.remove("fix_math");
 
               if (!isObserverStarted) {
-                isObserverStarted = true; // Устанавливаем флаг
+                isObserverStarted = true;
                 interceptXHRRequests();
                 observeTopicDivs((topicDivs, observer) => {
-                  if (currentTopicIndex < topicDivs.length) {
+                  if (proxyState.currentTopicIndex <= 5) {
                     topicDivs.forEach((topicDiv) => {
                       topicDiv.style.backgroundColor = "transparent";
                     });
 
-                    topicDivs[currentTopicIndex].style.backgroundColor =
-                      "green";
+                    topicDivs[
+                      proxyState.currentTopicIndex
+                    ].style.backgroundColor = "green";
                     setTimeout(() => {
-                      topicDivs[currentTopicIndex].click();
+                      topicDivs[proxyState.currentTopicIndex].click();
                     }, 1500);
                   } else {
-                    alert("Все темы пройдены!");
+                    alert("закончилось");
                     observer.disconnect();
                   }
                 }, "fix_science");
@@ -785,7 +812,7 @@
               document.body.classList.remove("fix_science");
 
               if (isObserverStarted) {
-                isObserverStarted = false; // Устанавливаем флаг
+                isObserverStarted = false;
                 observeTopicDivs((topicDivs) => {
                   topicDivs.forEach((topicDiv) => {
                     topicDiv.style.backgroundColor = "transparent";
@@ -809,4 +836,64 @@
 
   // Экспортируем функции для отладки
   window.logDragItems = logDragItems;
+
+  // Добавляем функцию observeAndClick
+  const clickedElements = new Set();
+
+  const observeAndClick = (
+    selector,
+    delay = 1000,
+    handler = (element) => {},
+    timeout = 10000
+  ) => {
+    // Если по этому селектору уже был клик - выходим
+    if (clickedElements.has(selector)) {
+      console.log(`Click already processed for: ${selector}`);
+      return;
+    }
+
+    let timeoutId;
+
+    const observer = new MutationObserver((mutations, observerInstance) => {
+      const element = document.querySelector(selector);
+      if (element && !clickedElements.has(selector)) {
+        observerInstance.disconnect();
+        clearTimeout(timeoutId);
+
+        // Помечаем селектор как обработанный
+        clickedElements.add(selector);
+
+        setTimeout(() => {
+          element.click();
+          handler?.(element);
+          console.log(`Clicked element: ${selector}`);
+        }, delay);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    timeoutId = setTimeout(() => {
+      observer.disconnect();
+      console.log(`Element ${selector} not found within ${timeout}ms`);
+    }, timeout);
+
+    const element = document.querySelector(selector);
+    if (element && !clickedElements.has(selector)) {
+      observer.disconnect();
+      clearTimeout(timeoutId);
+
+      // Помечаем селектор как обработанный
+      clickedElements.add(selector);
+
+      setTimeout(() => {
+        element.click();
+        handler?.(element);
+        console.log(`Clicked element: ${selector}`);
+      }, delay);
+    }
+  };
 })();

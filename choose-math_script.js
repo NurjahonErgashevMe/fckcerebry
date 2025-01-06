@@ -1913,7 +1913,12 @@
 
                   topicDivs[lastIndex].style.backgroundColor = "green";
 
-                  observeAndClick(topicDivs[lastIndex].className, 1500, 50000);
+                  observeAndClick(
+                    topicDivs[lastIndex].className,
+                    1500,
+                    () => {},
+                    50000
+                  );
                 }, "fix_math");
               }
             } else {

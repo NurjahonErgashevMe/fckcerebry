@@ -5,16 +5,31 @@
 
   // Конфигурация ответов по ID вопроса
   const answersData = {
-    //УПР 1
-    16752338: {
+    16937643: {
       answers: [
         {
           type: "chooser",
-          values: [[1, 4]],
+          values: [[1]],
         },
       ],
     },
-    16752314: {
+    16937692: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[1]],
+        },
+      ],
+    },
+    16937732: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[2]],
+        },
+      ],
+    },
+    16937873: {
       answers: [
         {
           type: "chooser",
@@ -22,19 +37,124 @@
         },
       ],
     },
-    16752352: {
+    16938994 : {
+      answers : [
+        {
+          type : "math",
+          values : ["0,37"]
+        }
+      ]
+    },
+    16937888: {
+      answers: [
+        {
+          type: "select",
+          values: [1, 1, 2],
+        },
+      ],
+    },
+
+    16938021: {
       answers: [
         {
           type: "chooser",
-          values: [[0]],
+          values: [[1]],
         },
         {
           type: "select",
-          values: [1, 1],
+          values: [2],
         },
       ],
     },
-    16752310: {
+    16939234: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[2]],
+        },
+      ],
+    },
+    16939411: {
+      answers: [
+        {
+          type: "math",
+          values: ["0,880"],
+        },
+      ],
+    },
+    16939423: {
+      answers: [
+        {
+          type: "math",
+          values: ["0,880"],
+        },
+      ],
+    },
+    16939423: {
+      answers: [
+        {
+          type: "math",
+          values: ["3"],
+        },
+      ],
+    },
+    16941796: {
+      answers: [
+        {
+          type: "math",
+          values: ["75"],
+        },
+      ],
+    },
+    16941921: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[3]],
+        },
+      ],
+    },
+    16942146: {
+      answers: [
+        {
+          type: "text",
+          values: [41, 190],
+        },
+      ],
+    },
+    16942244: {
+      answers: [
+        {
+          type: "math",
+          values: ["58,3"],
+        },
+      ],
+    },
+    16942250: {
+      answers: [
+        {
+          type: "chooser",
+          values: [2],
+        },
+      ],
+    },
+    16942268: {
+      answers: [
+        {
+          type: "math",
+          values: ["41,4"],
+        },
+      ],
+    },
+    16942370: {
+      answers: [
+        {
+          type: "chooser",
+          values: [1],
+        },
+      ],
+    },
+    16942951: {
       answers: [
         {
           type: "select",
@@ -42,1262 +162,139 @@
         },
       ],
     },
-    16752304: {
+    16943282: {
       answers: [
         {
           type: "chooser",
-          values: [[1]],
+          values: [3],
         },
       ],
     },
-    16752348: {
+    16943363: {
+      answers: [
+        {
+          type: "select",
+          values: [1, 1],
+        },
+      ],
+    },
+    16951325: {
       answers: [
         {
           type: "chooser",
-          values: [[1]],
-        },
-        {
-          type: "text",
-          values: ["25"],
-        },
-      ],
-    },
-    16752295: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0, 3]],
-        },
-      ],
-    },
-    16752324: {
-      answers: [
-        {
-          type: "text",
-          values: ["454"],
-        },
-      ],
-    },
-    16752287: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1, 3]],
-        },
-      ],
-    },
-    16752281: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0, 4, 5]],
-        },
-      ],
-    },
-
-    // УПР 2
-    16752525: {
-      answers: [
-        {
-          type: "text",
-          values: [3429],
-        },
-      ],
-    },
-    16752515: {
-      answers: [
-        {
-          type: "text",
-          values: [3993],
-        },
-      ],
-    },
-    16752500: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16752491: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16752482: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16752477: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16752532: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [2]],
-        },
-      ],
-    },
-    16752471: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16752467: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16752464: {
-      answers: [
-        {
-          type: "drag",
-          values: [
-            { "item-id": "drag-4", "target-id": "target1" },
-            { "item-id": "drag-5", "target-id": "target2" },
-            { "item-id": "drag-6", "target-id": "target3" },
-          ],
-        },
-      ],
-    },
-
-    // УПР  3
-    16762127: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0], [1]],
-        },
-      ],
-    },
-    16762113: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16762109: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-
-    16762107: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0, 3]],
-        },
-      ],
-    },
-    16762106: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16762099: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16762125: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [1]],
-        },
-      ],
-    },
-    16762095: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0, 1]],
-        },
-      ],
-    },
-    16762092: {
-      answers: [
-        {
-          type: "text",
-          values: [19],
-        },
-      ],
-    },
-    16762090: {
-      answers: [
-        {
-          type: "text",
-          values: [17],
-        },
-      ],
-    },
-
-    // УПР 4
-    16762306: {
-      answers: [
-        {
-          type: "text",
           values: [2],
         },
       ],
     },
-    16762303: {
+    16951343: {
+      answers: [
+        {
+          type: "math",
+          values: ["121,50"],
+        },
+      ],
+    },
+    16951354: {
+      answers: [
+        {
+          type: "math",
+          values: ["27,5"],
+        },
+      ],
+    },
+    16951357: {
       answers: [
         {
           type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16762291: {
-      answers: [
-        {
-          type: "text",
-          values: [38],
-        },
-      ],
-    },
-    16762284: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-        {
-          type: "select",
-          values: [2, 1],
-        },
-      ],
-    },
-    16762277: {
-      answers: [
-        {
-          type: "text",
-          values: [52],
-        },
-      ],
-    },
-    16762267: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16762257: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16762255: {
-      answers: [
-        {
-          type: "text",
-          values: [100, 225],
-        },
-      ],
-    },
-    16762253: {
-      answers: [{ type: "text", values: [3] }],
-    },
-    16762243: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    // УПР 5
-    16763032: {
-      answers: [
-        {
-          type: "text",
-          values: [9],
-        },
-      ],
-    },
-    16763029: {
-      answers: [
-        {
-          type: "select",
-          values: [1, 2],
-        },
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16777657: {
-      answers: [
-        {
-          type: "select",
-          values: [1, 2],
-        },
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16763025: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16763015: {
-      answers: [
-        {
-          type: "text",
-          values: [246],
-        },
-      ],
-    },
-    16763011: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16763000: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16762996: {
-      answers: [
-        {
-          type: "text",
-          values: [8575],
-        },
-      ],
-    },
-    16762991: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16777642: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    // УПР 6
-    16763259: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-        {
-          type: "select",
-          values: [2, 1, 3],
-        },
-      ],
-    },
-    16763250: {
-      answers: [
-        {
-          type: "text",
-          values: [100],
-        },
-      ],
-    },
-    16763245: {
-      answers: [
-        {
-          type: "text",
-          values: [1745],
-        },
-      ],
-    },
-    16763238: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16763233: {
-      answers: [
-        {
-          type: "text",
-          values: ["50,2", "1/2"],
-        },
-      ],
-    },
-    16763225: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0, 2]],
-        },
-      ],
-    },
-    16763242: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16763207: {
-      answers: [
-        {
-          type: "text",
-          values: ["53,5", "72,25"],
-        },
-      ],
-    },
-    16763203: {
-      answers: [
-        {
-          type: "text",
-          values: ["84,3"],
-        },
-      ],
-    },
-    16763215: {
-      answers: [
-        {
-          type: "text",
-          values: ["5,45"],
-        },
-      ],
-    },
-
-    // УПР 7
-    16763964: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16763959: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16763954: {
-      answers: [
-        {
-          type: "select",
-          values: [2, 2, 4, 3],
-        },
-        {
-          type: "text",
-          values: ["100", "0", "400", "500"],
-        },
-      ],
-    },
-    16763950: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16763994: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [0], [0]],
-        },
-      ],
-    },
-    16763985: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-        {
-          type: "text",
-          values: ["16,67", "1"],
-        },
-      ],
-    },
-    16763937: {
-      answers: [
-        {
-          type: "text",
-          values: ["10,38"],
-        },
-      ],
-    },
-    16763931: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16763928: {
-      answers: [
-        {
-          type: "text",
-          values: ["0,1"],
-        },
-      ],
-    },
-    16763981: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2], [0]],
-        },
-      ],
-    },
-
-    // УПР 7
-    16764669: {
-      answers: [
-        {
-          type: "text",
-          values: ["56", "7", "8"],
-        },
-      ],
-    },
-    16764685: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [0, 1, 2]],
-        },
-      ],
-    },
-
-    16764659: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1, 3]],
-        },
-      ],
-    },
-
-    16764650: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16764644: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16764640: {
-      answers: [
-        {
-          type: "text",
-          values: ["21"],
-        },
-      ],
-    },
-    16764683: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [1], [0], [0], [1]],
-        },
-      ],
-    },
-    16764631: {
-      answers: [
-        {
-          type: "text",
-          values: ["9", "7", "4"],
-        },
-      ],
-    },
-    16764621: {
-      answers: [
-        {
-          type: "text",
-          values: ["0,33"],
-        },
-      ],
-    },
-    16764619: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2, 3]],
-        },
-      ],
-    },
-    16765031: {
-      answers: [
-        {
-          type: "text",
-          values: ["40"],
-        },
-      ],
-    },
-    16765026: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16765054: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2], [1], [1]],
-        },
-      ],
-    },
-    16765020: {
-      answers: [
-        {
-          type: "text",
-          values: ["27720"],
-        },
-      ],
-    },
-    16765010: {
-      answers: [
-        {
-          type: "text",
-          values: ["0,08", "0,92"],
-        },
-      ],
-    },
-    16765005: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16765001: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16764993: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[4]],
-        },
-      ],
-    },
-    16764991: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-        {
-          type: "text",
-          values: ["400"],
-        },
-        {
-          type: "select",
           values: [1],
         },
       ],
     },
-
-    16765049: {
+    16951669: {
       answers: [
         {
           type: "chooser",
-          values: [[3]],
+          values: [1],
+        },
+        {
+          type: "select",
+          values: [1, 1, 3, 1],
         },
       ],
     },
-
-    // УПР 10
-    16765463: {
+    16952056: {
       answers: [
         {
           type: "chooser",
-          values: [[2]],
+          values: [0],
+        },
+        {
+          type: "select",
+          values: [1, 1, 1, 1],
         },
       ],
     },
-    16765455: {
+    16952087: {
       answers: [
         {
           type: "chooser",
-          values: [[1]],
+          values: [0],
+        },
+        {
+          type: "select",
+          values: [1, 1, 1, 1],
         },
       ],
     },
-    16765449: {
+    16952105: {
       answers: [
         {
           type: "chooser",
-          values: [[1]],
+          values: [1],
         },
       ],
     },
-    16765443: {
+    16952113: {
       answers: [
         {
-          type: "text",
-          values: ["252"],
-        },
-      ],
-    },
-    16765474: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [0], [1]],
-        },
-      ],
-    },
-    16765435: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16765431: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16765470: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16765419: {
-      answers: [
-        {
-          type: "text",
-          values: ["102"],
-        },
-      ],
-    },
-    16765421: {
-      answers: [
-        {
-          type: "text",
-          values: ["1200"],
-        },
-      ],
-    },
-    16765696: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16765687: {
-      answers: [
-        {
-          type: "text",
-          values: ["15"],
-        },
-      ],
-    },
-    16765681: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1, 5, 6, 8, 9]],
-        },
-      ],
-    },
-    16765675: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[4]],
-        },
-      ],
-    },
-    16765673: {
-      answers: [
-        {
-          type: "text",
-          values: ["37,680"],
-        },
-      ],
-    },
-    16765662: {
-      answers: [
-        {
-          type: "text",
-          values: ["600"],
-        },
-      ],
-    },
-    16765656: {
-      answers: [
-        {
-          type: "text",
-          values: ["250"],
-        },
-      ],
-    },
-    16765651: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16765644: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16765647: {
-      answers: [
-        {
-          type: "text",
-          values: ["74"],
-        },
-      ],
-    },
-    // УПР 12
-    16765947: {
-      answers: [
-        {
-          type: "text",
-          values: ["500", "4500", "30000"],
-        },
-      ],
-    },
-    16765937: {
-      answers: [
-        {
-          type: "text",
-          values: ["30000", "0,154"],
-        },
-      ],
-    },
-    16765930: {
-      answers: [
-        {
-          type: "text",
-          values: ["48000", "47639"],
-        },
-      ],
-    },
-    16765921: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16765916: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16765906: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16765897: {
-      answers: [
-        {
-          type: "text",
-          values: ["84", "84", "48"],
-        },
-      ],
-    },
-    16765953: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0], [1], [0]],
-        },
-      ],
-    },
-    16765890: {
-      answers: [
-        {
-          type: "text",
-          values: ["4"],
-        },
-      ],
-    },
-    16765887: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    // УПР 13
-    16767534: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16767526: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16767519: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16767514: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16767507: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16767500: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16767496: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[0]],
-        },
-      ],
-    },
-    16767488: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16767484: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16767480: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    // УПР 14
-    16767724: {
-      answers: [
-        {
-          type: "text",
-          values: ["37"],
-        },
-      ],
-    },
-    16767743: {
-      answers: [
-        {
-          type: "text",
-          values: ["188"],
-        },
-      ],
-    },
-    16767710: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [0], [1]],
-        },
-      ],
-    },
-    16767703: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-      ],
-    },
-    16767728: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16767690: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1], [0]],
-        },
-      ],
-    },
-    16767686: {
-      answers: [
-        {
-          type: "text",
-          values: ["1", "2"],
-        },
-      ],
-    },
-    16767679: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16767673: {
-      answers: [
-        {
-          type: "text",
-          values: ["8"],
-        },
-      ],
-    },
-    16767736: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-        {
-          type: "text",
-          values: ["992"],
-        },
-      ],
-    },
-
-    // УПР 15
-    16768057: {
-      answers: [
-        {
-          type: "text",
-          values: ["17"],
-        },
-      ],
-    },
-    16768054: {
-      answers: [
-        {
-          type: "text",
-          values: ["51,75"],
-        },
-      ],
-    },
-    16768048: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[1]],
-        },
-        {
-          type: "text",
+          type: "math",
           values: ["3"],
         },
       ],
     },
-    16768039: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16768028: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[2]],
-        },
-      ],
-    },
-    16768023: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16768015: {
-      answers: [
-        {
-          type: "chooser",
-          values: [[3]],
-        },
-      ],
-    },
-    16768010: {
-      answers: [
-        {
-          type: "text",
-          values: ["19"],
-        },
-      ],
-    },
-    16768004: {
-      answers: [
-        {
-          type: "text",
-          values: ["61500"],
-        },
-      ],
-    },
-    16767998: {
+    16952149: {
       answers: [
         {
           type: "select",
-          values: [1, 2, 1, 1],
-        },
-        {
-          type: "text",
-          values: ["13500", "13600", "100"],
+          values: [1, 2],
         },
       ],
     },
   };
 
+  // Функция для выбора раздела (topic)
   const observeTopicDivs = (onHas, type) => {
-    const observer = new MutationObserver((mutations, observerInstance) => {
+    const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes.length) {
-          const topicDivs = document.querySelectorAll(
-            `body.${type} div[class^=topic-main]:not(.topic-disabled__1-jCQ)`
+          // Ищем контейнер с разделами
+          const topicContainer = document.querySelector(
+            'div[class^="topic-list-container"]'
           );
+          if (topicContainer) {
+            // Находим все доступные разделы (исключаем disabled)
+            const availableTopics = topicContainer.querySelectorAll(
+              'div[class^="topic-main"]:not([class^="topic-disabled"])'
+            );
+            console.log(availableTopics, "availableTopics");
 
-          if (topicDivs.length > 0) {
-            const lastIndex = topicDivs.length - 1;
-
-            proxyState.currentTopicIndex = lastIndex;
-
-            onHas(topicDivs, lastIndex, observerInstance);
-            if (lastIndex >= 15) {
-              observerInstance.disconnect();
+            if (availableTopics.length > 0) {
+              // Выбираем второй раздел
+              const secondTopic = availableTopics[1];
+              if (secondTopic) {
+                // Передаем только один элемент, а не массив
+                onHas(secondTopic, observer);
+              }
             }
           }
         }
@@ -1319,27 +316,18 @@
     set: function (obj, prop, value) {
       if (prop === "currentTopicIndex" && value !== obj[prop]) {
         console.log(`property set: ${prop} = ${value}`);
-
-        if (value >= 15) {
-          alert("все тесты математики успешно пройдены!");
-        } else {
-          const topicDivs = document?.querySelectorAll(
-            `body.fix_math div[class^=topic-main]:not(.topic-disabled__1-jCQ)`
-          );
-
-          const currentTopic = topicDivs[value];
-          console.log(currentTopic, "currentTopic");
-
-          topicDivs.forEach((topicDiv) => {
-            topicDiv.style.backgroundColor = "transparent";
-            topicDiv.classList.remove("active-topic");
-          });
-
-          currentTopic.style.backgroundColor = "green";
-          currentTopic.classList.add("active-topic");
-
-          currentTopic.click();
-        }
+        resetClickHistory();
+        observeTopicDivs((topic, observer) => {
+          if (value >= 5) {
+            alert("все тесты math успешно пройдены!");
+            observer.disconnect();
+          } else {
+            topic.style.backgroundColor = "green";
+            setTimeout(() => {
+              topic.click();
+            }, 1000);
+          }
+        }, "fix_math");
       }
       obj[prop] = value;
       return true;
@@ -1426,178 +414,6 @@
   // Функция для очистки истории кликов (используйте при необходимости сбросить состояние)
   const resetClickHistory = () => {
     clickedElements.clear();
-  };
-  // // Функция для ожидания появления элемента и добавления обработчика
-  // const waitForElementAndHandle = (selector, handler, timeout = 5000) => {
-  //   return new Promise((resolve, reject) => {
-  //     // Если элемент уже существует
-  //     if (document.querySelector(selector)) {
-  //       const element = addClickHandlerOnce(
-  //         document.querySelector(selector),
-  //         handler
-  //       );
-  //       resolve(element);
-  //       return;
-  //     }
-
-  //     const observer = new MutationObserver((mutations, observerInstance) => {
-  //       const element = document.querySelector(selector);
-  //       if (element) {
-  //         // Останавливаем наблюдение
-  //         observerInstance.disconnect();
-  //         const handledElement = addClickHandlerOnce(element, handler);
-  //         resolve(handledElement);
-  //       }
-  //     });
-
-  //     // Настройка observer
-  //     observer.observe(document.body, {
-  //       childList: true,
-  //       subtree: true,
-  //     });
-
-  //     // Таймаут для прекращения ожидания
-  //     setTimeout(() => {
-  //       observer.disconnect();
-  //       reject(`Element ${selector} not found within ${timeout}ms`);
-  //     }, timeout);
-  //   });
-  // };
-
-  // const addClickHandlerOnce = (element, handler, delay = 0) => {
-  //   if (!element) {
-  //     console.log("element not found", element);
-  //     return;
-  //   }
-
-  //   // Удаляем все существующие обработчики
-  //   const clonedElement = element.cloneNode(true);
-  //   element.parentNode.replaceChild(clonedElement, element);
-
-  //   // Добавляем один обработчик после задержки
-  //   setTimeout(() => {
-  //     clonedElement.addEventListener(
-  //       "click",
-  //       (event) => {
-  //         // Предотвращаем множественные быстрые клики
-  //         clonedElement.style.pointerEvents = "none";
-  //         handler(event);
-
-  //         // Возвращаем возможность клика через короткое время
-  //         setTimeout(() => {
-  //           clonedElement.style.pointerEvents = "auto";
-  //         }, 1000);
-  //       },
-  //       { once: true }
-  //     ); // Обработчик сработает только один раз
-  //   }, delay);
-
-  //   return clonedElement;
-  // };
-
-  const interceptXHRRequests = () => {
-    if (isXHRIntercepted) return;
-    isXHRIntercepted = true;
-
-    // Сохраняем оригинальные методы
-    const originalXHR = window.XMLHttpRequest;
-
-    // Создаем новый конструктор XMLHttpRequest
-    function XMLHttpRequestProxy() {
-      const xhr = new originalXHR();
-
-      // Перехватываем open
-      const originalOpen = xhr.open;
-      xhr.open = function () {
-        xhr._url = arguments[1];
-        return originalOpen.apply(xhr, arguments);
-      };
-
-      // Перехватываем send
-      const originalSend = xhr.send;
-      xhr.send = function () {
-        const originalOnReadyStateChange = xhr.onreadystatechange;
-
-        xhr.onreadystatechange = function () {
-          const dynamicSuffix = getDynamicSuffix();
-          if (
-            xhr.readyState === 4 &&
-            (xhr.status === 200 || xhr.status === 201)
-          ) {
-            try {
-              if (xhr._url && xhr._url.includes("/next_question/")) {
-                const response = JSON.parse(xhr.responseText);
-                const questionId = response.question?.id;
-                proxyState.questionId = questionId;
-                resetClickHistory();
-
-                console.log("Перехвачен запрос next_question, ID:", questionId);
-
-                if (questionId && answersData[questionId]) {
-                  console.log("Обработка вопроса:", questionId);
-                  setTimeout(() => processQuestion(questionId), 1000);
-                }
-              } else if (xhr._url && xhr._url.includes("/submit_response/")) {
-                const response = JSON.parse(xhr.responseText);
-
-                if (response.title === "RIGHT") {
-                  showNotification("Ответ правильный");
-                  isAnswersInserted = false;
-
-                  if (response.user_progress === 100) {
-                    if (proxyState.currentTopicIndex === 14) {
-                      alert("Поздравляем! Вы прошли все тесты по MATH");
-                    } else {
-                      observeAndClick('div[class^="choose-btn"]', 1000);
-                      observeAndClick('div[class^="try-button"]', 1000);
-                    }
-                  } else {
-                    observeAndClick('div[class^="try-button"]', 1000);
-                  }
-                }
-              } else if (
-                xhr._url &&
-                xhr._url.includes(
-                  `/api/v2/users/student-class/DGHR-MATH-${dynamicSuffix}/chapters/`
-                )
-              ) {
-                // console.log(response, "math");
-              } else if (
-                xhr._url &&
-                xhr._url.includes(
-                  `/api/v2/users/student-class/DGHR-MATH-${dynamicSuffix}/chapter/`
-                ) &&
-                xhr._url.includes("/topics/")
-              ) {
-                const response = JSON.parse(xhr.responseText)?.[0];
-                const userProgress = response.user_progress;
-                if (userProgress === 100) {
-                  observeAndClick("div[class^=goback-button]", 1000, () => {
-                    // proxyState.currentTopicIndex += 1;
-                  });
-                } else {
-                  observeAndClick("div[class^=practice-btn]", 1000);
-                }
-              }
-            } catch (e) {
-              console.error("Ошибка при обработке ответа:", e);
-            }
-          }
-
-          // Вызываем оригинальный обработчик, если он есть
-          if (originalOnReadyStateChange) {
-            originalOnReadyStateChange.apply(xhr, arguments);
-          }
-        };
-
-        return originalSend.apply(xhr, arguments);
-      };
-
-      return xhr;
-    }
-
-    // Заменяем оригинальный XMLHttpRequest на наш прокси
-    window.XMLHttpRequest = XMLHttpRequestProxy;
   };
 
   const logDragItems = () => {};
@@ -1811,6 +627,11 @@
             });
           });
           break;
+
+        case "math":
+          // Для типа math считаем, что ответ всегда вставлен
+          // Фактическая модификация произойдет при отправке запроса
+          break;
       }
     });
 
@@ -1820,8 +641,7 @@
   const processQuestionByType = (questionData) => {
     if (!questionData || !questionData.answers) return;
 
-    // console.log(questionData.answers, "selectElement");
-    let dragIndex = 0; // Индекс для drag элементов
+    let dragIndex = 0;
 
     questionData.answers.forEach((answer, index) => {
       if (answer.type === "select") {
@@ -1830,7 +650,6 @@
         );
         answer.values.forEach((selectIndex, i) => {
           const selectElement = allSelects[i];
-          // console.log(selectElement, "selectElement");
           if (selectElement) {
             setSelectValue(selectElement, selectIndex);
           }
@@ -1841,15 +660,39 @@
         handleTextInput(answer.values);
       } else if (answer.type === "drag") {
         handleDragDrop(answer.values, dragIndex);
-        dragIndex++; // Увеличиваем индекс для drag элементов
+        dragIndex++;
+      } else if (answer.type === "math") {
+        // Для типа math просто нажимаем кнопку проверки
+        // Перехват и модификация запроса произойдет в interceptXHRRequests
+        console.log("Обработка ответа типа math:", answer.values);
+
+        // Можно добавить визуальное отображение ответа, если нужно
+        const mathInputs = document.querySelectorAll(
+          'input[type="text"][class*="math"]'
+        );
+        if (mathInputs.length > 0) {
+          const formattedValue = answer.values[0].toString().replace(".", ",");
+          mathInputs[0].value = formattedValue;
+
+          // Генерируем событие input для обновления UI
+          const event = new Event("input", { bubbles: true });
+          mathInputs[0].dispatchEvent(event);
+        }
       }
     });
 
-    if (areAllAnswersInserted(questionData)) {
+    // Проверяем, есть ли ответ типа "math"
+    const hasMathAnswer = questionData.answers.some(
+      (answer) => answer.type === "math"
+    );
+
+    if (hasMathAnswer || areAllAnswersInserted(questionData)) {
       isAnswersInserted = true;
       const checkButton = document.querySelector('div[class^="check-button"]');
-      checkButton.setAttribute("type", "button");
-      observeAndClick('div[class^="check-button"]', 1000);
+      if (checkButton) {
+        checkButton.setAttribute("type", "button");
+        observeAndClick('div[class^="check-button"]', 1000);
+      }
     }
   };
 
@@ -1884,6 +727,7 @@
     }, 5000);
   };
 
+  // Модифицируем observeBodyForHeader для корректной работы с новой структурой
   const observeBodyForHeader = () => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -1893,41 +737,31 @@
           );
           if (headerTitle) {
             const dynamicSuffix = getDynamicSuffix();
-            // console.log(getDynamicSuffix(), "getDynamicSuffix");
             if (
               headerTitle.textContent.trim() === `DGHR-MATH-${dynamicSuffix}`
             ) {
-              // console.log(`Header title matched: DGHR-MATH-${dynamicSuffix}`);
               document.body.classList.add("fix_math");
               document.body.classList.remove("fix_science");
 
               if (!isObserverStarted) {
-                isObserverStarted = true; // Устанавливаем флаг
+                isObserverStarted = true;
                 interceptXHRRequests();
-                observeTopicDivs((topicDivs, lastIndex) => {
-                  console.log("first topic divs observer");
 
-                  topicDivs.forEach((topicDiv) => {
-                    topicDiv.style.backgroundColor = "transparent";
-                  });
-
-                  topicDivs[lastIndex].style.backgroundColor = "green";
-
-                  observeAndClick(
-                    topicDivs[lastIndex].className,
-                    1500,
-                    () => {},
-                    50000
-                  );
+                // Запускаем наблюдатель для выбора раздела (topic)
+                observeTopicDivs((topic, observer) => {
+                  console.log("Найден раздел (topic), кликаем на него");
+                  topic.style.backgroundColor = "green";
+                  setTimeout(() => {
+                    topic.click();
+                  }, 1500);
                 }, "fix_math");
               }
             } else {
-              // console.log("Header title did not match. Stopping observer.");
               document.body.classList.add("fix_science");
               document.body.classList.remove("fix_math");
 
               if (isObserverStarted) {
-                isObserverStarted = false; // Устанавливаем флаг
+                isObserverStarted = false;
                 observeTopicDivs((topicDivs) => {
                   topicDivs.forEach((topicDiv) => {
                     topicDiv.style.backgroundColor = "transparent";
@@ -1953,4 +787,408 @@
   window.logDragItems = logDragItems;
 
   console.log("math script end");
+
+  // Модифицируем функцию для работы с subtopics
+  const handleSubtopics = () => {
+    // Находим все доступные subtopics (тесты), исключая те, у которых есть класс disbled-subtopic
+    const allSubtopics = document.querySelectorAll(
+      'div[class^="subclasses-name"]:not([class*="disbled-subtopic"])'
+    );
+
+    console.log(allSubtopics, "все subtopics");
+
+    // Фильтруем, исключая те, у которых есть класс subtopic-clicked
+    const availableSubtopics = Array.from(allSubtopics).filter((subtopic) => {
+      console.log(subtopic.classList, "классы subtopic");
+      console.log(
+        subtopic.classList.contains("subtopic-clicked__3xV4X"),
+        "классы clicked subtopic"
+      );
+      return !subtopic.className
+        .split(" ")
+        .some((cls) => cls.startsWith("subtopic-clicked"));
+    });
+
+    console.log(availableSubtopics, "доступные subtopics (без clicked)");
+
+    if (availableSubtopics && availableSubtopics.length > 0) {
+      // Берем последний доступный subtopic
+      const lastAvailableSubtopic =
+        availableSubtopics[availableSubtopics.length - 1];
+
+      if (lastAvailableSubtopic) {
+        console.log(
+          "Выбираем последний доступный тест:",
+          lastAvailableSubtopic
+        );
+
+        // Ищем кнопку practice внутри последнего доступного subtopic
+        const practiceButton = lastAvailableSubtopic.querySelector(
+          'button[class^="practice-btn"]'
+        );
+
+        console.log("Кликаем на кнопку practice в последнем доступном тесте");
+        observeAndClick('div[class^="practice-btn"]', 1500, () => {
+          console.log("Клик выполнен");
+        });
+      }
+    } else {
+      console.log("Нет доступных subtopics или все уже пройдены");
+    }
+  };
+
+  // Модифицируем функцию interceptXHRRequests для обработки ответов типа "math"
+  const interceptXHRRequests = () => {
+    if (isXHRIntercepted) return;
+    isXHRIntercepted = true;
+
+    const originalXHR = window.XMLHttpRequest;
+
+    function XMLHttpRequestProxy() {
+      const xhr = new originalXHR();
+
+      // Перехватываем open
+      const originalOpen = xhr.open;
+      xhr.open = function () {
+        xhr._url = arguments[1];
+        return originalOpen.apply(xhr, arguments);
+      };
+
+      // Перехватываем send
+      const originalSend = xhr.send;
+      xhr.send = function (data) {
+        // Проверяем, является ли запрос отправкой ответа
+        if (xhr._url && xhr._url.includes("/submit_response/")) {
+          console.log("Перехвачен XHR запрос на submit_response:", xhr._url);
+
+          try {
+            // Проверяем, есть ли у нас тело запроса
+            if (data) {
+              // Парсим тело запроса
+              const body = JSON.parse(data);
+
+              // Проверяем, есть ли у нас ответ типа "math" для текущего вопроса
+              const questionId = proxyState.questionId;
+              console.log("Текущий ID вопроса:", questionId);
+
+              const questionData = answersData[questionId];
+              console.log("Данные вопроса:", questionData);
+
+              if (questionData && questionData.answers) {
+                const mathAnswer = questionData.answers.find(
+                  (answer) => answer.type === "math"
+                );
+
+                if (mathAnswer) {
+                  console.log("Найден ответ типа math:", mathAnswer);
+
+                  // Форматируем значение для отправки
+                  const formattedValue = mathAnswer.values[0];
+
+                  // Модифицируем тело запроса
+                  body.user_response = `[[${formattedValue}]]`;
+                  body.user_response_ui = [[formattedValue]];
+
+                  console.log("Модифицированный запрос:", body);
+
+                  // Отправляем модифицированный запрос
+                  return originalSend.call(this, JSON.stringify(body));
+                }
+              }
+            }
+          } catch (e) {
+            console.error("Ошибка при перехвате XHR запроса:", e);
+            console.error(e.stack);
+          }
+        }
+
+        // Обработка onreadystatechange
+        const originalOnReadyStateChange = xhr.onreadystatechange;
+        xhr.onreadystatechange = function () {
+          const dynamicSuffix = getDynamicSuffix();
+          if (
+            xhr.readyState === 4 &&
+            (xhr.status === 200 || xhr.status === 201)
+          ) {
+            try {
+              // Обрабатываем ответ после клика на раздел (topic)
+              if (xhr._url && xhr._url.includes("/topics/")) {
+                console.log("Перехвачен ответ от /topics/");
+
+                try {
+                  const response = JSON.parse(xhr.responseText);
+                  console.log("Данные о разделах:", response);
+
+                  if (response) {
+                    console.log("Найдены subtopics:", response);
+
+                    // Ищем первый непройденный подтест (has_attempted: false или user_progress < 100)
+                    const availableSubtopic = response.find(
+                      (subtopic) =>
+                        (subtopic.has_attempted === false &&
+                          subtopic.is_published === true) ||
+                        (subtopic.user_progress !== undefined &&
+                          subtopic.user_progress < 100 &&
+                          subtopic.is_published === true)
+                    );
+
+                    if (availableSubtopic) {
+                      console.log(
+                        "Найден непройденный subtopic:",
+                        availableSubtopic
+                      );
+
+                      // Сохраняем ID и имя выбранного subtopic для дальнейшего использования
+                      const subtopicId = availableSubtopic.id;
+                      const subtopicName = availableSubtopic.name;
+
+                      console.log(
+                        `Будем искать subtopic с ID: ${subtopicId} и именем: ${subtopicName}`
+                      );
+
+                      // Ждем, пока DOM обновится
+                      setTimeout(() => {
+                        // Пробуем разные селекторы для поиска элементов subtopic
+                        const subtopicSelectors = [
+                          `div[data-id="${subtopicId}"]`,
+                          `div[class^="subclasses-name"]:not([class*="disbled-subtopic"])`,
+                          `div[class^="subclasses-container"]`,
+                        ];
+
+                        let targetElement = null;
+
+                        // Пробуем найти элемент по разным селекторам
+                        for (const selector of subtopicSelectors) {
+                          const elements = document.querySelectorAll(selector);
+                          console.log(
+                            `Найдено ${elements.length} элементов по селектору: ${selector}`
+                          );
+
+                          // Если нашли элементы, пробуем найти тот, который содержит имя нужного subtopic
+                          if (elements.length > 0) {
+                            for (const element of elements) {
+                              console.log(`Проверяем элемент:`, element);
+                              console.log(
+                                `Текст элемента: "${element.textContent}"`
+                              );
+
+                              if (element.textContent.includes(subtopicName)) {
+                                targetElement = element;
+                                console.log(
+                                  `Найден элемент с текстом, содержащим "${subtopicName}":`,
+                                  targetElement
+                                );
+                                break;
+                              }
+                            }
+
+                            // Если не нашли по имени, берем первый элемент
+                            if (!targetElement && elements.length > 0) {
+                              targetElement = elements[0];
+                              console.log(
+                                `Не найден элемент с нужным именем, берем первый:`,
+                                targetElement
+                              );
+                            }
+
+                            if (targetElement) break;
+                          }
+                        }
+
+                        if (targetElement) {
+                          console.log(
+                            "Найден DOM элемент для subtopic:",
+                            targetElement
+                          );
+
+                          // Ищем кнопку "проходить тест" внутри или рядом с найденным элементом
+                          const buttonSelectors = [
+                            'button[class^="practice-btn"]',
+                            'div[class^="practice-btn"]',
+                            'button:contains("проходить тест")',
+                            "button",
+                            'a[class^="practice-btn"]',
+                          ];
+
+                          let practiceButton = null;
+
+                          // Сначала ищем внутри targetElement
+                          for (const selector of buttonSelectors) {
+                            const buttons =
+                              targetElement.querySelectorAll(selector);
+                            if (buttons.length > 0) {
+                              practiceButton = buttons[0];
+                              console.log(
+                                `Найдена кнопка внутри элемента по селектору ${selector}:`,
+                                practiceButton
+                              );
+                              break;
+                            }
+                          }
+
+                          // Если не нашли внутри, ищем в родительском элементе
+                          if (!practiceButton && targetElement.parentElement) {
+                            for (const selector of buttonSelectors) {
+                              const buttons =
+                                targetElement.parentElement.querySelectorAll(
+                                  selector
+                                );
+                              if (buttons.length > 0) {
+                                practiceButton = buttons[0];
+                                console.log(
+                                  `Найдена кнопка в родительском элементе по селектору ${selector}:`,
+                                  practiceButton
+                                );
+                                break;
+                              }
+                            }
+                          }
+
+                          // Если все еще не нашли, ищем в документе
+                          if (!practiceButton) {
+                            // Ищем все кнопки на странице
+                            const allButtons = document.querySelectorAll(
+                              'button, div[class^="practice-btn"], a[class^="practice-btn"]'
+                            );
+                            console.log("Все кнопки на странице:", allButtons);
+
+                            // Ищем кнопку, которая находится ближе всего к targetElement
+                            let closestButton = null;
+                            let minDistance = Infinity;
+
+                            const targetRect =
+                              targetElement.getBoundingClientRect();
+
+                            for (const button of allButtons) {
+                              const buttonRect = button.getBoundingClientRect();
+                              const distance = Math.sqrt(
+                                Math.pow(buttonRect.left - targetRect.left, 2) +
+                                  Math.pow(buttonRect.top - targetRect.top, 2)
+                              );
+
+                              if (distance < minDistance) {
+                                minDistance = distance;
+                                closestButton = button;
+                              }
+                            }
+
+                            if (closestButton) {
+                              practiceButton = closestButton;
+                              console.log(
+                                "Найдена ближайшая кнопка:",
+                                practiceButton
+                              );
+                            }
+                          }
+
+                          if (practiceButton) {
+                            console.log(
+                              "Найдена кнопка, кликаем:",
+                              practiceButton
+                            );
+                            setTimeout(() => {
+                              practiceButton.click();
+                              console.log("Клик выполнен");
+                            }, 500);
+                          } else {
+                            console.log(
+                              "Кнопка не найдена, пробуем кликнуть на сам элемент"
+                            );
+                            targetElement.click();
+
+                            // После клика на элемент, пробуем найти и кликнуть на кнопку
+                            setTimeout(() => {
+                              const practiceBtn = document.querySelector(
+                                'div[class^="practice-btn"], button[class^="practice-btn"]'
+                              );
+                              if (practiceBtn) {
+                                console.log(
+                                  "Найдена кнопка после клика на элемент:",
+                                  practiceBtn
+                                );
+                                practiceBtn.click();
+                              } else {
+                                console.log(
+                                  "Кнопка не найдена даже после клика на элемент"
+                                );
+                              }
+                            }, 1000);
+                          }
+                        } else {
+                          console.log(
+                            "Не удалось найти DOM элемент для subtopic"
+                          );
+
+                          // Пробуем найти любую кнопку "проходить тест" на странице
+                          const anyPracticeButton = document.querySelector(
+                            'div[class^="practice-btn"], button[class^="practice-btn"]'
+                          );
+                          if (anyPracticeButton) {
+                            console.log(
+                              "Найдена кнопка practice на странице:",
+                              anyPracticeButton
+                            );
+                            anyPracticeButton.click();
+                          } else {
+                            console.log(
+                              "Не найдено ни одной кнопки practice на странице"
+                            );
+                          }
+                        }
+                      }, 2000); // Увеличиваем задержку до 2 секунд
+                    } else {
+                      console.log("Все subtopics уже пройдены или недоступны");
+
+                      // Если все пройдены, увеличиваем индекс раздела
+                      proxyState.currentTopicIndex++;
+                    }
+                  }
+                } catch (parseError) {
+                  console.error(
+                    "Ошибка при парсинге ответа от /topics/:",
+                    parseError
+                  );
+                }
+              }
+
+              // Оставляем существующую логику для остальных запросов
+              if (xhr._url && xhr._url.includes("/next_question/")) {
+                const response = JSON.parse(xhr.responseText);
+                const questionId = response.question?.id;
+                proxyState.questionId = questionId;
+                resetClickHistory();
+
+                console.log("Перехвачен запрос next_question, ID:", questionId);
+
+                if (questionId && answersData[questionId]) {
+                  console.log("Обработка вопроса:", questionId);
+                  setTimeout(() => processQuestion(questionId), 1000);
+                }
+              } else if (xhr._url && xhr._url.includes("/submit_response/")) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.title === "RIGHT") {
+                  showNotification("Ответ правильный");
+                  isAnswersInserted = false;
+                  observeAndClick('div[class^="try-button"]', 1500);
+                }
+              }
+            } catch (e) {
+              console.error("Ошибка при обработке ответа:", e);
+            }
+          }
+
+          if (originalOnReadyStateChange) {
+            originalOnReadyStateChange.apply(xhr, arguments);
+          }
+        };
+
+        // Если не нужно модифицировать запрос, отправляем как есть
+        return originalSend.apply(this, arguments);
+      };
+
+      return xhr;
+    }
+
+    window.XMLHttpRequest = XMLHttpRequestProxy;
+  };
 })();

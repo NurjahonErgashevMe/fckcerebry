@@ -5,6 +5,94 @@
 
   // Конфигурация ответов по ID вопроса
   const answersData = {
+    16768057: {
+      answers: [
+        {
+          type: "text",
+          values: ["17"],
+        },
+      ],
+    },
+    16768054: {
+      answers: [
+        {
+          type: "text",
+          values: ["51,75"],
+        },
+      ],
+    },
+    16768048: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[1]],
+        },
+        {
+          type: "text",
+          values: ["3"],
+        },
+      ],
+    },
+    16768039: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[2]],
+        },
+      ],
+    },
+    16768028: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[2]],
+        },
+      ],
+    },
+    16768023: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[3]],
+        },
+      ],
+    },
+    16768015: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[3]],
+        },
+      ],
+    },
+    16768010: {
+      answers: [
+        {
+          type: "text",
+          values: ["19"],
+        },
+      ],
+    },
+    16768004: {
+      answers: [
+        {
+          type: "text",
+          values: ["61500"],
+        },
+      ],
+    },
+    16767998: {
+      answers: [
+        {
+          type: "select",
+          values: [1, 2, 1, 1],
+        },
+        {
+          type: "text",
+          values: ["13500", "13600", "100"],
+        },
+      ],
+    },
     16937643: {
       answers: [
         {
@@ -37,13 +125,13 @@
         },
       ],
     },
-    16938994 : {
-      answers : [
+    16938994: {
+      answers: [
         {
-          type : "math",
-          values : ["0,37"]
-        }
-      ]
+          type: "math",
+          values: ["0,37"],
+        },
+      ],
     },
     16937888: {
       answers: [
@@ -134,7 +222,7 @@
       answers: [
         {
           type: "chooser",
-          values: [2],
+          values: [[2]],
         },
       ],
     },
@@ -150,7 +238,7 @@
       answers: [
         {
           type: "chooser",
-          values: [1],
+          values: [[1]],
         },
       ],
     },
@@ -166,7 +254,7 @@
       answers: [
         {
           type: "chooser",
-          values: [3],
+          values: [[3]],
         },
       ],
     },
@@ -182,7 +270,7 @@
       answers: [
         {
           type: "chooser",
-          values: [2],
+          values: [[2]],
         },
       ],
     },
@@ -206,7 +294,7 @@
       answers: [
         {
           type: "chooser",
-          values: [1],
+          values: [[1]],
         },
       ],
     },
@@ -214,7 +302,7 @@
       answers: [
         {
           type: "chooser",
-          values: [1],
+          values: [[1]],
         },
         {
           type: "select",
@@ -226,11 +314,11 @@
       answers: [
         {
           type: "chooser",
-          values: [0],
+          values: [[0]],
         },
         {
           type: "select",
-          values: [1, 1, 1, 1],
+          values: [1, 1, 1, 1, 1],
         },
       ],
     },
@@ -238,7 +326,7 @@
       answers: [
         {
           type: "chooser",
-          values: [0],
+          values: [[0]],
         },
         {
           type: "select",
@@ -250,7 +338,7 @@
       answers: [
         {
           type: "chooser",
-          values: [1],
+          values: [[1]],
         },
       ],
     },
@@ -270,6 +358,16 @@
         },
       ],
     },
+
+    // 3 BOSHQICH
+    17099612: {
+      answers: [
+        {
+          type: "chooser",
+          values: [[1, 4]],
+        },
+      ],
+    },
   };
 
   // Функция для выбора раздела (topic)
@@ -284,16 +382,19 @@
           if (topicContainer) {
             // Находим все доступные разделы (исключаем disabled)
             const availableTopics = topicContainer.querySelectorAll(
-              'div[class^="topic-main"]:not([class^="topic-disabled"])'
+              'div[class^="topic-main"]:not([class*="topic-disabled"])'
             );
             console.log(availableTopics, "availableTopics");
 
             if (availableTopics.length > 0) {
-              // Выбираем второй раздел
-              const secondTopic = availableTopics[1];
-              if (secondTopic) {
+              // Выбираем последний раздел
+              const lastAvailableTopic =
+                availableTopics[availableTopics.length - 1];
+              if (availableTopics.length === 3) {
+                alert("math закончен!");
+              } else {
                 // Передаем только один элемент, а не массив
-                onHas(secondTopic, observer);
+                onHas(lastAvailableTopic, observer);
               }
             }
           }
@@ -857,51 +958,6 @@
       // Перехватываем send
       const originalSend = xhr.send;
       xhr.send = function (data) {
-        // Проверяем, является ли запрос отправкой ответа
-        if (xhr._url && xhr._url.includes("/submit_response/")) {
-          console.log("Перехвачен XHR запрос на submit_response:", xhr._url);
-
-          try {
-            // Проверяем, есть ли у нас тело запроса
-            if (data) {
-              // Парсим тело запроса
-              const body = JSON.parse(data);
-
-              // Проверяем, есть ли у нас ответ типа "math" для текущего вопроса
-              const questionId = proxyState.questionId;
-              console.log("Текущий ID вопроса:", questionId);
-
-              const questionData = answersData[questionId];
-              console.log("Данные вопроса:", questionData);
-
-              if (questionData && questionData.answers) {
-                const mathAnswer = questionData.answers.find(
-                  (answer) => answer.type === "math"
-                );
-
-                if (mathAnswer) {
-                  console.log("Найден ответ типа math:", mathAnswer);
-
-                  // Форматируем значение для отправки
-                  const formattedValue = mathAnswer.values[0];
-
-                  // Модифицируем тело запроса
-                  body.user_response = `[[${formattedValue}]]`;
-                  body.user_response_ui = [[formattedValue]];
-
-                  console.log("Модифицированный запрос:", body);
-
-                  // Отправляем модифицированный запрос
-                  return originalSend.call(this, JSON.stringify(body));
-                }
-              }
-            }
-          } catch (e) {
-            console.error("Ошибка при перехвате XHR запроса:", e);
-            console.error(e.stack);
-          }
-        }
-
         // Обработка onreadystatechange
         const originalOnReadyStateChange = xhr.onreadystatechange;
         xhr.onreadystatechange = function () {
@@ -921,6 +977,21 @@
 
                   if (response) {
                     console.log("Найдены subtopics:", response);
+                    const allCompleted = response.every(
+                      (subtopic) => subtopic.user_progress === 100
+                    );
+
+                    if (allCompleted) {
+                      console.log(
+                        "Все subtopics завершены, возвращаемся на topics."
+                      );
+
+                      observeAndClick("div[class^=goback-button]", 1500, () => {
+                        console.log("Клик по кнопке 'Назад' выполнен.");
+                      });
+
+                      return; // Прерываем дальнейшую обработку
+                    }
 
                     // Ищем первый непройденный подтест (has_attempted: false или user_progress < 100)
                     const availableSubtopic = response.find(
@@ -1164,12 +1235,16 @@
                   console.log("Обработка вопроса:", questionId);
                   setTimeout(() => processQuestion(questionId), 1000);
                 }
-              } else if (xhr._url && xhr._url.includes("/submit_response/")) {
+              }
+
+              if (xhr._url && xhr._url.includes("/submit_response/")) {
                 const response = JSON.parse(xhr.responseText);
+                console.log("got response");
                 if (response.title === "RIGHT") {
+                  console.log("ответ правильный!");
                   showNotification("Ответ правильный");
                   isAnswersInserted = false;
-                  observeAndClick('div[class^="try-button"]', 1500);
+                  observeAndClick('div[class^="try-button"]', 2500);
                 }
               }
             } catch (e) {
@@ -1181,6 +1256,51 @@
             originalOnReadyStateChange.apply(xhr, arguments);
           }
         };
+
+        // Проверяем, является ли запрос отправкой ответа
+        if (xhr._url && xhr._url.includes("/submit_response/")) {
+          console.log("Перехвачен XHR запрос на submit_response:", xhr._url);
+
+          try {
+            // Проверяем, есть ли у нас тело запроса
+            if (data) {
+              // Парсим тело запроса
+              const body = JSON.parse(data);
+
+              // Проверяем, есть ли у нас ответ типа "math" для текущего вопроса
+              const questionId = proxyState.questionId;
+              console.log("Текущий ID вопроса:", questionId);
+
+              const questionData = answersData[questionId];
+              console.log("Данные вопроса:", questionData);
+
+              if (questionData && questionData.answers) {
+                const mathAnswer = questionData.answers.find(
+                  (answer) => answer.type === "math"
+                );
+
+                if (mathAnswer) {
+                  console.log("Найден ответ типа math:", mathAnswer);
+
+                  // Форматируем значение для отправки
+                  const formattedValue = mathAnswer.values[0];
+
+                  // Модифицируем тело запроса
+                  body.user_response = `[[${formattedValue}]]`;
+                  body.user_response_ui = [[formattedValue]];
+
+                  console.log("Модифицированный запрос:", body);
+
+                  // Отправляем модифицированный запрос
+                  return originalSend.call(this, JSON.stringify(body));
+                }
+              }
+            }
+          } catch (e) {
+            console.error("Ошибка при перехвате XHR запроса:", e);
+            console.error(e.stack);
+          }
+        }
 
         // Если не нужно модифицировать запрос, отправляем как есть
         return originalSend.apply(this, arguments);

@@ -961,7 +961,6 @@
         // Обработка onreadystatechange
         const originalOnReadyStateChange = xhr.onreadystatechange;
         xhr.onreadystatechange = function () {
-          const dynamicSuffix = getDynamicSuffix();
           if (
             xhr.readyState === 4 &&
             (xhr.status === 200 || xhr.status === 201)

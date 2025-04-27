@@ -347,6 +347,14 @@ const answersData1 = {
       },
     ],
   },
+  17096435: {
+    answers: [
+      {
+        type: "text",
+        values: [246],
+      },
+    ],
+  },
   16763029: {
     answers: [
       {
@@ -957,8 +965,8 @@ const answersData1 = {
   16765930: {
     answers: [
       {
-        type: "text",
-        values: ["48000", "47639"],
+        type: "chooser",
+        values: [[0]],
       },
     ],
   },
